@@ -2,30 +2,48 @@
 //Iniciar sesión y la conexión a la db
 require_once './includes/conexion.php';
 
-//obtener los datos del formulario
-if(isset($_POST){
+if(isset($_POST)){
+	
+	//obtener los datos del formulario
 	$email=trim($_POST['email']);
 	$password=$_POST['password'];
 	
+
 	//consulta para comprobar las credenciales de usuario
 
+	$sql="select * from usuario where email='$email'";
+	$login = mysqli_query($db,$sql);
+	
+	
 	//validar datos del formulario (comprobar password)
+	if($login && mysqli_num_rows($login)==1){
+		
+		$usuario=mysqli_fetch_assoc($login);
 
+		$verify=password_verify($password,$usuario['password']);
+		if($verify){
+			//Utilizar una sesion para guardar los datos del usuario logueado	
+			$_SESSION['usuario']=$usuario;
+			if(isset($_SESSION['error_login'])){
+				$_SESSION['error_login']=null;
+			}
 
+		}else{ 
+			//Si algo fall enviar una sesion con el fallo
+			$_SESION['error_login']="correo o contraseña incorrectos";
+			
 
+		}
+	}else{		
+		//error
 
-	//Guardar los datos del usuario en una sesion
-
-
-	//Si hay fallos enviarlos en una sesion
-
-
-
-	//Redirigir al indexi.php 
-	$sql="select password from usuarios where email='$email' limit 1";
-
-	$password=mysqli_query($db,$sql);
-
-	var_dump($password);
-	mysqli_free_result($password);
+		$_SESION['error_login']="Login incorrecto";
+			
+	}
 }
+
+//Redirigir al indexi.php 
+
+header('Location:index.php');
+
+
