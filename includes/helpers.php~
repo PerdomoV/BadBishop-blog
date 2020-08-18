@@ -28,7 +28,8 @@ function getCategorias($db){
 	$sql="SELECT * FROM categorias ORDER BY id ASC;";
 	$categorias=mysqli_query($db,$sql);
 	$result=[];
-	
+	var_dump(mysqli_fetch_assoc($categorias)); 
+	die();
 	if($categorias && mysqli_num_rows($categorias)>=1){
 		$result=$categorias;
 	}

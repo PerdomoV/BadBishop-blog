@@ -23,7 +23,7 @@
                     <li>
                         <a href='index.php'>Inicio</a>
                     </li>
-               
+                </ul>
 		<?php 
 			$categorias=getCategorias($db);
 			while($categoria=mysqli_fetch_assoc($categorias)):
