@@ -17,6 +17,10 @@ function borrarErrores()
 
     }
 
+    if (isset($_SESSION['errores_entrada'])) {
+        $_SESSION['errores_entrada'] = null;
+    }
+
     if (isset($_SESSION['completado'])) {
         $_SESSION['completado'] = null;
         //$borrado=session_unset(); 
@@ -41,7 +45,9 @@ function getCategorias($db)
 
 function getEntradas($db)
 {
-    $sql = "SELECT categorias.nombre as 'categoria', entradas.titulo as 'titulo', entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias WHERE categorias.id=entradas.categoria_id LIMIT 4";
+    $sql = "SELECT categorias.nombre as 'categoria', entradas.titulo as 'titulo',
+     entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias
+      WHERE categorias.id=entradas.categoria_id  ORDER BY fecha DESC LIMIT 4";
     $entradas = mysqli_query($db, $sql);
     $result = [];
 
