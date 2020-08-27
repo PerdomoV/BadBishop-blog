@@ -12,7 +12,7 @@
             </h3>
             <a class='boton boton-verde' href='crear-entrada.php'>Crear entrada</a>
             <a class='boton' href='crear-categoria.php'>Crear categoría</a>
-            <a class='boton boton-naranja' href='cerrar.php'>Mis datos</a>
+            <a class='boton boton-naranja' href='mis-datos.php'>Mis datos</a>
             <a class='boton boton-rojo' href='cerrar.php'>Cerrar sesión</a>
 
         </div>
