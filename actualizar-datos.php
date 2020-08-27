@@ -39,22 +39,35 @@ if(isset($_POST)){
 
     $guardar_usuario = false;
     if(count($errores)==0){
-        $guardar_usuario=true; $id=$_SESSION['usuario']['id'];
 
 
-        $sql="UPDATE usuarios set nombre='$nombre', apellidos='$apellidos', email='$email' WHERE id=$id";
-        $guardar = mysqli_query($db, $sql);
 
-    if($guardar){
-        $_SESSION['completado']="La actualización se ha completado con éxito";
-        $_SESSION['usuario']['nombre']=$nombre;
-        $_SESSION['usuario']['apellidos']=$apellidos;
-        $_SESSION['usuario']['email']=$email;
-        
-    }else{
-        $_SESSION['errores']['general']="Fallo al actualizar datos de usuario";
-    }
 
+        $id=$_SESSION['usuario']['id'];
+        $sql = "SELECT id ,email FROM usuarios where '$email'=email";
+        $consulta=mysqli_query($db,$sql); $consulta=mysqli_fetch_assoc($consulta); 
+        if($consulta['id']==$_SESSION['usuario']['id'] || empty($consulta['email'])){
+
+            $guardar_usuario=true; 
+
+
+
+            $sql="UPDATE usuarios set nombre='$nombre', apellidos='$apellidos', email='$email' WHERE id=$id";
+                $guardar = mysqli_query($db, $sql);
+
+            if($guardar){
+                $_SESSION['completado']="La actualización se ha completado con éxito";
+                $_SESSION['usuario']['nombre']=$nombre;
+                $_SESSION['usuario']['apellidos']=$apellidos;
+                $_SESSION['usuario']['email']=$email;
+                
+            }else{
+                $_SESSION['errores']['general']="Fallo al actualizar datos de usuario";
+            }
+        }else{
+            $errores['email']="El email ya está en uso";
+            $_SESSION['errores']=$errores;
+        }
     }else{
     $_SESSION['errores']=$errores;  
 }
