@@ -43,11 +43,17 @@ function getCategorias($db)
 }
 
 
-function getEntradas($db)
+function getEntradas($db, $limit)
 {
+
     $sql = "SELECT categorias.nombre as 'categoria', entradas.titulo as 'titulo',
-     entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias
-      WHERE categorias.id=entradas.categoria_id  ORDER BY fecha DESC LIMIT 4";
+    entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias
+     WHERE categorias.id=entradas.categoria_id  ORDER BY fecha DESC";
+    
+    if($limit){
+        $sql.="  LIMIT 4";
+    }
+    
     $entradas = mysqli_query($db, $sql);
     $result = [];
 
