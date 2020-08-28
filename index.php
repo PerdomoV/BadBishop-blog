@@ -13,8 +13,9 @@
 	?>
 
 		<article class='entrada'>
-			<a href='#'>
-
+		
+			<a href='entrada.php?id=<?=$entrada['entrada_id'];?>'> 
+			<?//var_dump($entrada['id']);  die();?>
 				<h2><?= $entrada['titulo'] ?></h2>
 
 				<span class='fecha'>

@@ -16,7 +16,7 @@
 	?>
 
 		<article class='entrada'>
-			<a href='#'>
+			<a href='entrada.php?id=<?=$entrada['entrada_id'];?>'>
 
 				<h2><?= $entrada['titulo'] ?></h2>
 

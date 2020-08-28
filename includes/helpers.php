@@ -52,7 +52,7 @@ function getCategorias($db, $id = null)
 function getEntradas($db, $limit = null, $id = null)
 {
 
-    $sql = "SELECT categorias.nombre as 'categoria', entradas.titulo as 'titulo',
+    $sql = "SELECT entradas.id as 'entrada_id',categorias.nombre as 'categoria', entradas.titulo as 'titulo',
     entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias
      WHERE categorias.id=entradas.categoria_id  ORDER BY fecha DESC";
 
@@ -62,10 +62,8 @@ function getEntradas($db, $limit = null, $id = null)
 
     if ($id) {
         $id=(int)$id;
-        //var_dump($id);
-        //die();
-
-        $sql = "SELECT categorias.nombre as 'categoria', entradas.titulo as 'titulo',
+    
+        $sql = "SELECT entradas.id as 'entrada_id', categorias.nombre as 'categoria', entradas.titulo as 'titulo',
     entradas.descripcion AS 'descripcion', entradas.fecha AS 'fecha' FROM entradas INNER JOIN categorias
      ON categorias.id=entradas.categoria_id WHERE entradas.categoria_id=$id  ORDER BY fecha DESC";
     }
@@ -77,4 +75,19 @@ function getEntradas($db, $limit = null, $id = null)
         $result = $entradas;
     }
     return $result;
+}
+
+function getEntrada($db, $id){
+    
+    $sql="SELECT e.*, c.nombre AS 'categoria' FROM entradas e ".
+    "INNER JOIN categorias c ON e.categoria_id = c.id ".
+    "WHERE e.id=$id;";
+    $entrada=mysqli_query($db,$sql);
+    $resultado=[];
+    //var_dump($entrada);
+    //die();
+    if($entrada && mysqli_num_rows($entrada)>=1){
+        $resultado=mysqli_fetch_assoc($entrada);    
+    }
+    return $resultado;
 }

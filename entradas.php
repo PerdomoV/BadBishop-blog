@@ -1,7 +1,9 @@
 <?php require_once './includes/header.php'; ?>
+<?php require_once './includes/helpers.php'; ?>
 
 <!--sidebar-->
 <?php require_once './includes/side.php'; ?>
+
 <!--contenido principal-->
 <div id='principal'>
 
@@ -13,7 +15,7 @@
 	?>
 
 		<article class='entrada'>
-			<a href='#'>
+			<a href='entrada.php?id=<?=$entrada['entrada_id'];?>'>
 
 				<h2><?= $entrada['titulo'] ?></h2>
 
