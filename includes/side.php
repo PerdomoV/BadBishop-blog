@@ -3,8 +3,15 @@
 
 <aside id='sidebar'>
 
-    <?php //var_dump($_SESSION['usuario']); 
-    ?>
+
+    <div id="buscador" class="bloque">
+    <h3>Buscar</h3>
+        <form action='buscar.php' method="POST">
+        <input type="text" name="busqueda">
+        <input type="submit"value="Buscar">
+    </form>
+    </div> 
+       
     <?php if (isset($_SESSION['usuario'])) : ?>
         <div id='usuario-logueado' class='bloque'>
             <h3>Bienvenido,

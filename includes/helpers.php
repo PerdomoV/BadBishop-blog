@@ -49,12 +49,20 @@ function getCategorias($db, $id = null)
 }
 
 
-function getEntradas($db, $limit = null, $id = null)
+function getEntradas($db, $limit = null, $id = null, $busqueda=null)
 {
 
     $sql = "SELECT entradas.id as 'entrada_id',categorias.nombre as 'categoria', entradas.titulo as 'titulo',
     entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha' FROM entradas, categorias
      WHERE categorias.id=entradas.categoria_id  ORDER BY fecha DESC";
+
+    if(isset($busqueda)){
+    
+        $sql="SELECT entradas.id as 'entrada_id',categorias.nombre as 'categoria', entradas.titulo as 'titulo',
+         entradas.descripcion AS 'descripcion',entradas.fecha AS 'fecha', categorias.nombre AS 'categoria' FROM entradas INNER JOIN categorias ON
+         entradas.categoria_id=categorias.id WHERE entradas.titulo LIKE  '%$busqueda%' ";
+
+    }
 
     if ($limit) {
         $sql .= "  LIMIT 4";
@@ -70,7 +78,8 @@ function getEntradas($db, $limit = null, $id = null)
 
     $entradas = mysqli_query($db, $sql);
     $result = [];
-
+    //var_dump($entradas);
+    //die();
     if ($entradas && mysqli_num_rows($entradas) >= 1) {
         $result = $entradas;
     }
@@ -79,13 +88,13 @@ function getEntradas($db, $limit = null, $id = null)
 
 function getEntrada($db, $id){
     
-    $sql="SELECT e.*, c.nombre AS 'categoria' FROM entradas e ".
+    $sql="SELECT e.*, c.nombre AS 'categoria', CONCAT(u.nombre, ' ', u.apellidos) AS 'usuario' FROM entradas e ".
     "INNER JOIN categorias c ON e.categoria_id = c.id ".
+    "INNER JOIN usuarios u ON e.usuario_id = u.id ".
     "WHERE e.id=$id;";
     $entrada=mysqli_query($db,$sql);
     $resultado=[];
-    //var_dump($entrada);
-    //die();
+   
     if($entrada && mysqli_num_rows($entrada)>=1){
         $resultado=mysqli_fetch_assoc($entrada);    
     }
